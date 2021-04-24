@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="ad.size" content="width=300,height=250">
+    <link rel="canonical" href="//ms.purplepatch.online/drag-and-drop/safelife/">
+    <title> Drag and Drop Animation by PurplePatch </title>
+    <link rel="shortcut icon" type="image/x-icon" href="">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+            user-select: none
+        }
+
+        .pp_wrapper {
+            width: 300px;
+            height: 250px;
+            background-image: url(assets/bg.jpg);
+            background-size: 100% 100%;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer
+        }
+
+        .absolute {
+            position: absolute
+        }
+
+        .slide_1,
+        .slide_2 {
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0
+        }
+
+        .germ {
+            right: 67px;
+            bottom: 82px;
+            width: 33px;
+            height: 36px;
+            background-image: url(assets/2/veg.png);
+            background-repeat: no-repeat;
+        }
+
+        .draggableElement {
+            top: 79px;
+            bottom: 31px;
+            left: 205px;
+            cursor: pointer;
+            width: 48px;
+            height: 140px
+        }
+
+        .soap {
+            top: 108px;
+            bottom: 51px;
+            left: 15px;
+            cursor: pointer;
+            width: 45px;
+            height: 118px;
+        }
+
+        .drag_text {
+            top: 40px;
+            left: 0px;
+            margin: 0 auto;
+            right: 25px;
+            width: 178px;
+            height: 49px;
+        }
+
+        .drag {
+            top: 132px;
+            left: 74px;
+            cursor: pointer
+        }
+
+        .slide_2 .message {
+            left: 19px;
+            top: 91px
+        }
+
+        .slide_3 .element_1 {
+            left: 41px;
+            top: 50px;
+            z-index: 9
+        }
+
+        .slide_3 .element_2 {
+            left: 86px;
+            top: 54px;
+            z-index: 1
+        }
+
+        .slide_3 .element_3 {
+            left: 99px;
+            top: 119px
+        }
+
+        .hidden {
+            display: none
+        }
+
+        @keyframes shake {
+
+            10%,
+            90% {
+                transform: translate3d(-1px, 0, 0)
+            }
+
+            20%,
+            80% {
+                transform: translate3d(2px, 0, 0)
+            }
+
+            30%,
+            50%,
+            70% {
+                transform: translate3d(-4px, 0, 0)
+            }
+
+            40%,
+            60% {
+                transform: translate3d(4px, 0, 0)
+            }
+        }
+
+        @keyframes fadeMove {
+            from {
+                transform: translate3d(0, 80px, 0)
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translate3d(0, 80px, 0)
+            }
+        }
+
+        @keyframes fadeInZoom {
+            0% {
+                transform: scaleX(1.1)
+            }
+
+            50% {
+                transform: scale3d(.8, .8, .8) translate3d(0, 35px, 0)
+            }
+
+            to {
+                transform: scaleX(1)
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scaleX(1)
+            }
+
+            50% {
+                transform: scale3d(.95, .95, .95)
+            }
+
+            to {
+                transform: scaleX(1)
+            }
+        }
+
+        @keyframes hideToBottom {
+            100% {
+                opacity: 0;
+                transform: translate3d(0, 200px, 0)
+            }
+        }
+
+        @keyframes showFromBottom {
+            100% {
+                opacity: 0;
+                transform: translate3d(0, 0, 0)
+            }
+        }
+
+        @keyframes hideZoomOut {
+            100% {
+                opacity: 0;
+                transform: scale3d(.3, .3, .3)
+            }
+        }
+
+        @keyframes showZoomIn {
+            from {
+                opacity: 0;
+                transform: scale3d(.3, .3, .3)
+            }
+
+            to {
+                opacity: 1;
+                transform: scale3d(1, 1, 1)
+            }
+        }
+
+        @keyframes flyingMove {
+
+            0%,
+            100% {
+                transform: translateX(0)
+            }
+
+            50% {
+                transform: translateX(5px)
+            }
+        }
+
+        .flyingMove {
+            animation-name: flyingMove;
+            animation-duration: 1s;
+            animation-iteration-count: infinite
+        }
+
+        .fadeMove {
+            animation: fadeMove 1s infinite
+        }
+
+        .fadeInUp {
+            animation-name: fadeInUp;
+            animation-duration: .7s;
+            animation-fill-mode: both
+        }
+
+        .fadeInZoom {
+            animation-name: fadeInZoom;
+            animation-duration: .7s;
+            animation-fill-mode: both
+        }
+
+        .pulse {
+            animation-name: pulse;
+            animation-duration: 1s;
+            animation-iteration-count: infinite
+        }
+
+        .hideToBottom {
+            animation-name: hideToBottom;
+            animation-duration: 1s;
+            animation-fill-mode: both
+        }
+
+        .showFromBottom {
+            animation-name: showFromBottom;
+            animation-duration: 1s;
+            animation-fill-mode: both
+        }
+
+        .hideZoomOut {
+            animation-name: hideZoomOut;
+            animation-duration: .5s;
+            animation-fill-mode: both
+        }
+
+        .showZoomIn {
+            animation-name: showZoomIn;
+            animation-duration: .5s;
+            animation-fill-mode: both
+        }
+
+        .shake {
+            animation: shake 3.1s  infinite;
+            transform: translate3d(0, 0, 0);
+            backface-visibility: hidden;
+            perspective: 1000px
+        }
+    </style>
+</head>
+
+<body>
+    <div class="pp_wrapper">
+        <div class="slide_1 absolute hidden">
+            <div class="germ absolute"><img src="assets/1/veg.png" alt=""></div>
+            <div class="soap absolute"><img src="assets/1/bottle.png" alt=""></div>
+            <div class="draggableElement absolute hidden"><img src="assets/2/bottle.png" alt=""></div>
+            <div class="drag_text absolute"><img src="assets/1/text.png" alt=""></div>
+            <div class="drag absolute"><img src="assets/1/arrow.png" alt=""></div>
+        </div>
+        <div class="slide_2 absolute hidden">
+            <div class="message absolute hidden"><img src="assets/2/text.png" alt=""></div>
+        </div>
+        <a href="{CLICK_MACRO}" target="_blank">
+            <div class="slide_3 absolute hidden">
+                <div class="element_1 absolute hidden"><img src="assets/3/bottle.png" alt=""></div>
+                <div class="element_2 absolute hidden"><img src="assets/3/price.png" alt=""></div>
+                <div class="element_3 absolute hidden"><img src="assets/3/text.png" alt=""></div>
+            </div>
+        </a>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="purplepatch.js"></script>
+</body>
+
+</html>
